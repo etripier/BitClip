@@ -1,17 +1,6 @@
 angular.module('bitclip.sendFactory', [])
 
 .factory('TxBuilder', ['$q', '$rootScope', function($q, $rootScope) {
-  var transactionDetails = {};
-
-  var updateTx = function(transactionObj) {
-    transactionDetails = transactionObj;
-    return transactionDetails;
-  };
-
-  var getTransactionDetails = function() {
-    return transactionDetails;
-  };
-
   var sendTransaction = function(privateKeyWIF, transactionObj, isMainNet) {
     var deferred = $q.defer();
     var networkVar = {
@@ -144,7 +133,7 @@ angular.module('bitclip.sendFactory', [])
     };
     
     var regex = /[^a-zA-Z0-9]/;
-    if (regex.test(address)) {
+    if (regex.test(address) || address === undefined) {
       return false;
     }
     return check(address);
@@ -152,8 +141,6 @@ angular.module('bitclip.sendFactory', [])
 
   return {
     sendTransaction: sendTransaction,
-    isValidAddress: isValidAddress,
-    updateTx: updateTx,
-    getTransactionDetails: getTransactionDetails
+    isValidAddress: isValidAddress
   };
 }]);
