@@ -3,7 +3,7 @@ angular.module('bitclip.sendController', [
 ])
 
 .controller('sendController', ['$rootScope', '$scope', '$timeout', 'TxBuilder', 'Utilities', function($rootScope, $scope, $timeout, TxBuilder, Utilities) {
-  var displayError = function() {
+  $scope.validateInput = function() {
     if ($scope.sendForm.destination.$invalid && $scope.sendForm.amount.$invalid) {
       $scope.notification = 'Invalid destination and transaction amount.';
     } else if ($scope.sendForm.destination.$invalid) {
@@ -11,7 +11,6 @@ angular.module('bitclip.sendController', [
     } else if ($scope.sendForm.amount.$invalid) {
       $scope.notification = 'Invalid transaction amount.';
     }
-
     if ($scope.notification) {
       $timeout(function() {
         $scope.notification = false
@@ -21,7 +20,6 @@ angular.module('bitclip.sendController', [
     } 
   };
 
-  $scope.loading;
   $scope.transactionDetails = {};
   $scope.network = $rootScope.isMainNet;
 
@@ -29,17 +27,10 @@ angular.module('bitclip.sendController', [
     $scope.confirmed = !$scope.confirmed;
   };
 
-  $scope.validateInput = function() {
-    TxBuilder.updateTx($scope.transactionDetails);
-    $scope.transactionDetails = TxBuilder.getTransactionDetails();
-    displayError();
-  };
-
   $scope.sendPayment = function() {
     $scope.loading = true;
-    var updatedTxDetails = TxBuilder.getTransactionDetails();
     Utilities.getCurrentPrivateKey().then(function(currentPrivateKey) {
-      TxBuilder.sendTransaction(currentPrivateKey, updatedTxDetails, $scope.network)
+      TxBuilder.sendTransaction(currentPrivateKey, $scope.transactionDetails, $scope.network)
         .then(function(message) {
           $scope.notification = message;
           $timeout(function() {
