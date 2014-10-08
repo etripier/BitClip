@@ -3,7 +3,7 @@
   <label>Destination:</label>
   <input type="text" placeholder="e.g. mjjeyn6Vs4TAtMFKJEwpMPJsAVysxL4nYG" name="destination" ng-model="transactionDetails.destination" ng-class="{'has-error': sendForm.destination.$invalid && !sendForm.destination.$pristine }" valid-address required autofocus>
   <label>Amount:</label>
-  <input type="text" placeholder="minimum 0.0001 BTC" name="amount" ng-model="transactionDetails.amount" ng-pattern="/^(\d+\.?\d*|\.\d+)$/" ng-class="{'has-error': sendForm.amount.$invalid && !sendForm.amount.$pristine }" required>
+  <input type="text" placeholder="{{ placeholder }}" name="amount" ng-model="transactionDetails.amount" ng-pattern="/^(\d+\.?\d*|\.\d+)$/" ng-class="{'has-error': sendForm.amount.$invalid && !sendForm.amount.$pristine }" required>
   <input type="submit" value="confirm" ng-init="confirmed=false" ng-if="confirmed" class="sendViewButton morphButton send-confirm">
   <button ng-init="confirmed=false" ng-if="confirmed" class="sendViewButton morphButton send-cancel" ng-click="transactionDetails.amount = ''; morph();">cancel</button>
 </form>

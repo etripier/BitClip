@@ -21,8 +21,11 @@ angular.module('bitclip.sendController', [
   };
 
   $scope.transactionDetails = {};
-  $scope.network = $rootScope.isMainNet;
 
+  $rootScope.$watch('isMainNet', function(){
+    $scope.placeholder = ($rootScope.isMainNet) ? "0.0001 BTC will be added as transaction fee" : "minimum 0.0001 BTC";
+  });
+  
   $scope.morph = function() {
     $scope.confirmed = !$scope.confirmed;
   };
@@ -30,7 +33,7 @@ angular.module('bitclip.sendController', [
   $scope.sendPayment = function() {
     $scope.loading = true;
     Utilities.getCurrentPrivateKey().then(function(currentPrivateKey) {
-      TxBuilder.sendTransaction(currentPrivateKey, $scope.transactionDetails, $scope.network)
+      TxBuilder.sendTransaction(currentPrivateKey, $scope.transactionDetails, $rootScope.isMainNet)
         .then(function(message) {
           $scope.notification = message;
           $timeout(function() {
