@@ -73,9 +73,9 @@ bower install
 
 3. Click Load unpacked extension to pop up a file-selection dialog.
 
-4. Navigate to the 'client' directory of BitClip (path/BitClip_Directory/client)
+4. Navigate to the client directory of BitClip (path/BitClip_Directory/client)
 
-5. Click Select on 'client' directory, and BitClip will be loaded into your Browser.
+5. Click Select on client directory, and BitClip will be loaded into your Browser.
 
 ## Contributing
 
